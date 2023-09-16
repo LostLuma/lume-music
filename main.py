@@ -97,13 +97,16 @@ async def _update_presence(event: Event | None) -> None:
     if event is None:
         await presence.clear()
     else:
+        now = time.time()
+
+        elapsed: int = event['data']['song']['parsed']['currentTime'] or 0
         duration: int = event['data']['song']['processed']['duration'] or 0
 
         kwargs: dict[str, Any] = {
             'state': pad(event['data']['song']['processed']['artist']),
             'details': pad(event['data']['song']['processed']['track']),
-            'start': event['data']['song']['metadata']['startTimestamp'],
-            'end': event['data']['song']['metadata']['startTimestamp'] + duration,
+            'start': now - elapsed,
+            'end': now + duration - elapsed,
             'large_image': event['data']['song']['parsed']['trackArt'],
             'large_text': pad(event['data']['song']['processed']['album']),
             'buttons': [
@@ -115,6 +118,7 @@ async def _update_presence(event: Event | None) -> None:
         }
 
         if event['data']['song']['metadata']['userloved']:
+            kwargs['small_text'] = 'Loved'
             kwargs['small_image'] = 'https://files.lostluma.net/6KJOa4.png'
 
         try:
