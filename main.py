@@ -84,29 +84,30 @@ def pad(data: str | None) -> str | None:
 
 
 async def _update_presence(event: Event | None) -> None:
+    now = time.time()
+
     if State.last_update == 0:
         await presence.connect()
     else:
-        diff = time.perf_counter() - State.last_update
+        diff = now - State.last_update
 
         if (diff < 15):
             await asyncio.sleep(diff)
 
-    State.last_update = time.perf_counter()
+    State.last_update = time.time()
 
     if event is None:
         await presence.clear()
     else:
-        now = int(time.time())
-
         elapsed: int = event['data']['song']['parsed']['currentTime'] or 0
         duration: int = event['data']['song']['processed']['duration'] or 0
 
         kwargs: dict[str, Any] = {
+            'start': int(now - elapsed),
+            'end': int(now + duration - elapsed),
             'state': pad(event['data']['song']['processed']['artist']),
             'details': pad(event['data']['song']['processed']['track']),
-            'start': now - elapsed,
-            'end': now + duration - elapsed,
+            'large_text': pad(event['data']['song']['processed']['album']),
             'buttons': [
                 {
                     'label': 'Listen Along!',
@@ -123,7 +124,6 @@ async def _update_presence(event: Event | None) -> None:
             kwargs['large_image'] = 'https://files.lostluma.net/PoMvyI.gif'
         else:
             kwargs['large_image'] = event['data']['song']['parsed']['trackArt']
-            kwargs['large_text'] = pad(event['data']['song']['processed']['album'])
 
         try:
             await presence.update(**kwargs)  # pyright: ignore[reportUnknownMemberType]
