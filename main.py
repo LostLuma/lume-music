@@ -2,7 +2,7 @@ import asyncio
 import time
 from typing import Any, ClassVar, Literal, Optional, TypedDict
 
-import pypresence
+import pypresence  # pyright: ignore[reportMissingTypeStubs]
 from starlette.applications import Starlette
 from starlette.requests import Request
 from starlette.responses import PlainTextResponse, Response
@@ -76,9 +76,10 @@ class Event(TypedDict):
     data: _Data
 
 
-def pad(data: str) -> str:
-    if len(data) > 1:
+def pad(data: str | None) -> str | None:
+    if data is None or len(data) > 1:
         return data
+
     return data + '\u200b'
 
 
@@ -96,31 +97,15 @@ async def _update_presence(event: Event | None) -> None:
     if event is None:
         await presence.clear()
     else:
-        """
-            state=pad(processed['artist']),
-            details=pad(processed['track']),
-            start=metadata['startTimestamp'],
-            end=
-            duration=processed.get('duration', 0),
-            large_image=parsed['trackArt'],
-            large_text=pad(processed['album']),
-            buttons=[
-                {
-                    "label": "Listen Along",
-                    "url": parsed['originUrl'],
-                },
-            ],
-        """
-
         duration: int = event['data']['song']['processed']['duration'] or 0
 
         kwargs: dict[str, Any] = {
-            'state': event['data']['song']['processed']['artist'],
-            'details': event['data']['song']['processed']['track'],
+            'state': pad(event['data']['song']['processed']['artist']),
+            'details': pad(event['data']['song']['processed']['track']),
             'start': event['data']['song']['metadata']['startTimestamp'],
             'end': event['data']['song']['metadata']['startTimestamp'] + duration,
             'large_image': event['data']['song']['parsed']['trackArt'],
-            'large_text': event['data']['song']['processed']['album'],
+            'large_text': pad(event['data']['song']['processed']['album']),
             'buttons': [
                 {
                     'label': 'Listen Along!',
