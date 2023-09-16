@@ -1,0 +1,56 @@
+{
+    "eventName": "nowplaying",
+    "data": {
+        "song": {
+            "parsed": {
+                "track": "JIHYO \"Room\" Official Lyric Video",
+                "artist": "TWICE",
+                "albumArtist": "Jihyo",
+                "album": null,
+                "duration": 180,
+                "uniqueID": "Rzi9F0nfxMk",
+                "currentTime": 1,
+                "isPlaying": true,
+                "trackArt": null,
+                "isPodcast": false,
+                "originUrl": "https: //youtu.be/Rzi9F0nfxMk"
+            },
+            "processed": {
+                "track": "Room",
+                "artist": "Jihyo",
+                "albumArtist": "Jihyo",
+                "album": "ZONE",
+                "duration": 180
+            },
+            "noRegex": {
+                "track": "JIHYO \"Room\" Official Lyric Video",
+                "artist": "TWICE",
+                "albumArtist": null,
+                "album": null,
+                "duration": null
+            },
+            "flags": {
+                "isScrobbled": false,
+                "isCorrectedByUser": true,
+                "isRegexEditedByUser": {
+                    "track": false,
+                    "artist": false,
+                    "album": false,
+                    "albumArtist": false
+                },
+                "isAlbumFetched": false,
+                "isValid": false,
+                "isMarkedAsPlaying": true,
+                "isSkipped": false,
+                "isReplaying": false
+            },
+            "metadata": {
+                "userloved": true,
+                "startTimestamp": 1694826226,
+                "label": "YouTube"
+            },
+            "connectorLabel": "YouTube",
+            "controllerTabId": 13
+        }
+    }
+}
