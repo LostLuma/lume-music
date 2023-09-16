@@ -122,8 +122,8 @@ async def _update_presence(event: Event | None) -> None:
         if event['data']['song']['parsed']['trackArt'] is None:
             kwargs['large_image'] = 'https://files.lostluma.net/PoMvyI.gif'
         else:
-            kwargs['large_image'] = event['data']['song']['parsed']['trackArt'],
-            kwargs['large_text'] = pad(event['data']['song']['processed']['album']),
+            kwargs['large_image'] = event['data']['song']['parsed']['trackArt']
+            kwargs['large_text'] = pad(event['data']['song']['processed']['album'])
 
         try:
             await presence.update(**kwargs)  # pyright: ignore[reportUnknownMemberType]
