@@ -97,7 +97,7 @@ async def _update_presence(event: Event | None) -> None:
     if event is None:
         await presence.clear()
     else:
-        now = time.time()
+        now = int(time.time())
 
         elapsed: int = event['data']['song']['parsed']['currentTime'] or 0
         duration: int = event['data']['song']['processed']['duration'] or 0
@@ -107,8 +107,6 @@ async def _update_presence(event: Event | None) -> None:
             'details': pad(event['data']['song']['processed']['track']),
             'start': now - elapsed,
             'end': now + duration - elapsed,
-            'large_image': event['data']['song']['parsed']['trackArt'],
-            'large_text': pad(event['data']['song']['processed']['album']),
             'buttons': [
                 {
                     'label': 'Listen Along!',
@@ -120,6 +118,12 @@ async def _update_presence(event: Event | None) -> None:
         if event['data']['song']['metadata']['userloved']:
             kwargs['small_text'] = 'Loved'
             kwargs['small_image'] = 'https://files.lostluma.net/6KJOa4.png'
+
+        if event['data']['song']['parsed']['trackArt'] is None:
+            kwargs['large_image'] = 'https://files.lostluma.net/PoMvyI.gif'
+        else:
+            kwargs['large_image'] = event['data']['song']['parsed']['trackArt'],
+            kwargs['large_text'] = pad(event['data']['song']['processed']['album']),
 
         try:
             await presence.update(**kwargs)  # pyright: ignore[reportUnknownMemberType]
