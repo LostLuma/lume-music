@@ -114,6 +114,9 @@ async def _update_presence(event: Event | None) -> None:
             ],
         }
 
+        if event['data']['song']['metadata']['userloved']:
+            kwargs['small_image'] = 'https://files.lostluma.net/6KJOa4.png'
+
         try:
             await presence.update(**kwargs)  # pyright: ignore[reportUnknownMemberType]
         except pypresence.PipeClosed:
