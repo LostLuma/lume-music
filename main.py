@@ -76,11 +76,18 @@ class Event(TypedDict):
     data: _Data
 
 
-def pad(data: str | None) -> str | None:
-    if data is None or len(data) > 1:
+def pad_or_slice(data: str | None) -> str | None:
+    if data is None:
         return data
 
-    return data + '\u200b'
+    # Rich Presence text fields are
+    # Restricted within 2 to 32 characters
+    if len(data) == 1:
+        return data + '\u200b'
+    elif len(data) > 32:
+        return data[:30] + '..'
+
+    return data
 
 
 async def _update_presence(event: Event | None) -> None:
@@ -105,9 +112,9 @@ async def _update_presence(event: Event | None) -> None:
         kwargs: dict[str, Any] = {
             'start': int(now - elapsed),
             'end': int(now + duration - elapsed),
-            'state': pad(event['data']['song']['processed']['artist']),
-            'details': pad(event['data']['song']['processed']['track']),
-            'large_text': pad(event['data']['song']['processed']['album']),
+            'state': pad_or_slice(event['data']['song']['processed']['artist']),
+            'details': pad_or_slice(event['data']['song']['processed']['track']),
+            'large_text': pad_or_slice(event['data']['song']['processed']['album']),
             'buttons': [
                 {
                     'label': 'Listen Along!',
