@@ -1,6 +1,6 @@
 import asyncio
 import time
-from typing import Any, ClassVar, Literal, Optional, TypedDict
+from typing import Any, ClassVar, Literal, NotRequired, Optional, TypedDict
 
 import pypresence  # pyright: ignore[reportMissingTypeStubs]
 from starlette.applications import Starlette
@@ -52,7 +52,7 @@ class Flags(TypedDict):
 
 
 class Metadata(TypedDict):
-    userloved: bool
+    userloved: NotRequired[bool]
     startTimestamp: int
     label: str
 
@@ -123,7 +123,7 @@ async def _update_presence(event: Event | None) -> None:
             ],
         }
 
-        if event['data']['song']['metadata']['userloved']:
+        if event['data']['song']['metadata'].get('userloved'):
             kwargs['small_text'] = 'Loved'
             kwargs['small_image'] = 'https://files.lostluma.net/6KJOa4.png'
 
