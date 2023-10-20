@@ -1,0 +1,17 @@
+{
+    "listen_type": "playing_now",
+    "payload": [
+        {
+            "track_metadata": {
+                "artist_name": "JIHYO",
+                "release_name": "ZONE",
+                "track_name": "Wishing On You",
+                "additional_info": {
+                    "duration_ms": 194000,
+                    "submission_client": "Pano Scrobbler",
+                    "submission_client_version": "3.6 - 2023, Aug 16"
+                }
+            }
+        }
+    ]
+}
