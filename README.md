@@ -31,6 +31,6 @@ If you'd like to use this feel free to follow these steps:
 - Look up the URL under which the API is served via `tailscale serve status`
   - This should look something like `https://violet.beaver-beaver.ts.net:7950 (tailnet only)`
 - Add a custom ListenBrainz server in the app using this URL
-  - You will need to append `/event/musicbrainz` to the URL and provide a non-empty secret ([example here](https://files.lostluma.net/GTD7J4.png))
+  - You will need to append `/event/listenbrainz` to the URL and provide a non-empty secret ([example here](https://files.lostluma.net/GTD7J4.png))
 
 If you have more questions about the way tailscale works feel free to consult their documentation!
