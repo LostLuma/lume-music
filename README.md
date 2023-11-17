@@ -27,7 +27,7 @@ The solution I personally employ uses [tailscale](https://tailscale.com), as it 
 If you'd like to use this feel free to follow these steps:
 
 - Install tailscale on both your computer and mobile device
-- Serve the Lume Music API on your tailnet: `tailscale serve https:7950 / http://localhost:7950`
+- Serve the Lume Music API on your tailnet: ``tailscale serve --bg --https 7950 http://localhost:7950``
 - Look up the URL under which the API is served via `tailscale serve status`
   - This should look something like `https://violet.beaver-beaver.ts.net:7950 (tailnet only)`
 - Add a custom ListenBrainz server in the app using this URL
