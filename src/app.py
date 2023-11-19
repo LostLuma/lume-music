@@ -74,7 +74,13 @@ async def on_web_scrobbler_event(request: Request) -> Response:
 
 @app.route('/event/web-scrobbler', methods=['OPTIONS'])  # pyright: ignore[reportUntypedFunctionDecorator, reportUnknownMemberType]
 async def on_web_scrobbler_options(request: Request) -> Response:
-    return Response(headers={'Access-Control-Allow-Origin': '*'})
+    headers = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST',
+        'Access-Control-Allow-Headers': 'Content-Type'
+    }
+
+    return Response(headers=headers)
 
 
 # Allow adding the custom ListenBrainz server
