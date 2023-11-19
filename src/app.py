@@ -72,6 +72,11 @@ async def on_web_scrobbler_event(request: Request) -> Response:
     return PlainTextResponse()
 
 
+@app.route('/event/web-scrobbler', methods=['OPTIONS'])  # pyright: ignore[reportUntypedFunctionDecorator, reportUnknownMemberType]
+async def on_web_scrobbler_options(request: Request) -> Response:
+    return Response(headers={'Access-Control-Allow-Origin': '*'})
+
+
 # Allow adding the custom ListenBrainz server
 @app.route('/event/listenbrainz/1/validate-token', methods=['GET'])  # pyright: ignore[reportUntypedFunctionDecorator, reportUnknownMemberType]
 async def on_pano_scrobbler_validate_token(request: Request) -> Response:
